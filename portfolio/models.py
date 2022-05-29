@@ -105,6 +105,7 @@ class Noticia(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.CharField(max_length=50)
     link = models.URLField(blank=True, null=True)
+    imagem = models.ImageField(blank=True, upload_to=resolution_path, null=True)
 
 
 
