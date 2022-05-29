@@ -12,7 +12,7 @@ def resolution_path(instance, filename):
 
 class Pessoa(models.Model):
     first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50, blank=True)
     pagina = models.URLField(default="", blank=True, null=True)
     linkedin = models.URLField(default="", blank=True, null=True)
 
@@ -88,7 +88,7 @@ class Post(models.Model):
     titulo = models.CharField(max_length=50)
     descricao = models.TextField(blank=True)
     link = models.URLField(blank=True, null=True)
-    imagem = models.ImageField(blank=True, upload_to=resolution_path, default="", null=True)
+    imagem = models.ImageField(blank=True, upload_to=resolution_path, null=True)
 
 
 class PostForm(ModelForm):
@@ -105,7 +105,7 @@ class Noticia(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.CharField(max_length=50)
     link = models.URLField(blank=True, null=True)
-    imagem = models.ImageField(blank=True, null=True, upload_to=resolution_path, default="")
+
 
 
 class Certificado(models.Model):

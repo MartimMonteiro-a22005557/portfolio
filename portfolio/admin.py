@@ -62,6 +62,7 @@ class PostAdmin(admin.ModelAdmin):
     class Meta:
         fields = "__all__"
 
+
 admin.site.register(Pessoa, PessoaAdmin)
 
 admin.site.register(Cadeira, CadeiraAdmin)
@@ -87,6 +88,5 @@ admin.site.register(Habilitacao, HabilitacaoAdmin)
 admin.site.register(Aptidao, AptidaoAdmin)
 
 admin.site.register(Hobby, HobbyAdmin)
-
 
 admin.site.register(Post, PostAdmin)
