@@ -36,7 +36,8 @@ class PontuacaoQuizAdmin(admin.ModelAdmin):
     fields = ("nome", "pontuacao")
 
 class NoticiasAdmin(admin.ModelAdmin):
-    fields = ("nome", "descricao", "link")
+    class Meta:
+        fields = "__all__"
 
 
 class CertificadoAdmin(admin.ModelAdmin):

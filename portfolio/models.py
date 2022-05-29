@@ -88,7 +88,7 @@ class Post(models.Model):
     titulo = models.CharField(max_length=50)
     descricao = models.TextField(blank=True)
     link = models.URLField(blank=True)
-    imagem = models.ImageField(blank=True, upload_to=resolution_path)
+    imagem = models.ImageField(blank=True, upload_to=resolution_path, default="", null=True)
 
 
 class PostForm(ModelForm):
@@ -104,9 +104,8 @@ class PontuacaoQuiz(models.Model):
 class Noticias(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.CharField(max_length=50)
-    img = models.ImageField(blank=True)
     link = models.URLField(blank=True)
-    imagem = models.ImageField(blank=True, upload_to=resolution_path)
+    imagem = models.ImageField(blank=True, null=True, upload_to=resolution_path, default="")
 
 
 class Certificado(models.Model):

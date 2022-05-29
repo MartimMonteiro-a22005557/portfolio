@@ -29,9 +29,8 @@
 
                                     <div class="col-md-3 col-sm-6 col-xs-12 popup">
                                         <span class="popuptext" id="myPopup">A Simple Popup!</span>
-
-                                        <div style="background-image:url({{post.imagem.url}});background-size: cover, 100%;
-    background-position: center;)" class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{projeto.descricao}}</p> <div class=\"popupmenu\"> \
+                                        <div {% if post.imagem.url != None %} style="background-image:url({{post.imagem.url}});background-size: cover, 100%;
+    background-position: center;" {% endif %} class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{projeto.descricao}}</p> <div class=\"popupmenu\"> \
                                             {% for p in cadeira.profs_teoricas %} \
                                                     <a class=\"popupmenuitem\" href=\"{{p.pagina}}\"><div class=\"popupmenuitem\">{{p.first_name}} {{p.last_name}}</div></a> \
                                             {% endfor %} \
