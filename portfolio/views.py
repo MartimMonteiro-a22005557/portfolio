@@ -10,9 +10,9 @@ import collections
 from django.urls import reverse
 
 from portfolio.forms import CadeiraForm, ProjetoForm, EscolaForm, TecnologiaForm, LaboratorioForm, CertificadoForm, \
-	HobbyForm, HabilitacaoForm, AptidaoForm
+	HobbyForm, HabilitacaoForm, AptidaoForm, NoticiaForm
 from portfolio.models import Cadeira, Escola, Projeto, Tecnologia, Laboratorio, Pessoa, Post, PostForm, PontuacaoQuiz, \
-	Linguagem, Certificado, Habilitacao, Aptidao, Hobby, Noticias
+	Linguagem, Certificado, Habilitacao, Aptidao, Hobby, Noticia
 from matplotlib import pyplot as plt
 
 
@@ -69,7 +69,7 @@ def projetos_page_view(request):
 def web_page_view(request):
 	labs = list(Laboratorio.objects.all())
 	labs.sort(key=lambda x: x.numero, reverse=False)
-	return render(request, 'portfolio/web.html', {"tecnologias" : Tecnologia.objects.all(), "laboratorios" : labs, "noticias" : Noticias.objects.all()})
+	return render(request, 'portfolio/web.html', {"tecnologias" : Tecnologia.objects.all(), "laboratorios" : labs, "noticias" : Noticia.objects.all()})
 
 def blog_page_view(request):
 	return render(request, 'portfolio/blog.html', {"posts" : Post.objects.all()})
@@ -175,6 +175,8 @@ def lista_page_view(request):
 		a = Tecnologia.objects.all()
 	elif target == "laboratorio":
 		a = Laboratorio.objects.all()
+	elif target == "noticia":
+		a = Noticia.objects.all()
 
 
 	return render(request, 'portfolio/lista.html', {"lista": a, "target" : target})
@@ -212,6 +214,9 @@ def editar_page_view(request):
 		elif "hobby" in request.GET:
 			a = Hobby.objects.get(id=request.GET["hobby"])
 			form = HobbyForm(request.POST, instance=a)
+		elif "noticia" in request.GET:
+			a = Noticia.objects.get(id=request.GET["noticia"])
+			form = NoticiaForm(request.POST, instance=a)
 
 
 
@@ -251,6 +256,9 @@ def editar_page_view(request):
 		elif "hobby" in request.GET:
 			a = Hobby.objects.get(id=request.GET["hobby"])
 			form = HobbyForm(instance=a)
+		elif "noticia" in request.GET:
+			a = Noticia.objects.get(id=request.GET["noticia"])
+			form = NoticiaForm(instance=a)
 
 		return render(request, 'portfolio/editar.html', {"form": form})
 

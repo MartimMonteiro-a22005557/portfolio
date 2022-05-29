@@ -1,6 +1,7 @@
 from django.forms import ModelForm
 
-from portfolio.models import Cadeira, Projeto, Escola, Tecnologia, Laboratorio, Certificado, Habilitacao, Aptidao, Hobby
+from portfolio.models import Cadeira, Projeto, Escola, Tecnologia, Laboratorio, Certificado, Habilitacao, Aptidao, \
+    Hobby, Noticia
 
 
 class CadeiraForm(ModelForm):
@@ -50,4 +51,9 @@ class AptidaoForm(ModelForm):
 class HobbyForm(ModelForm):
     class Meta:
         model = Hobby
+        fields = '__all__'
+
+class NoticiaForm(ModelForm):
+    class Meta:
+        model = Noticia
         fields = '__all__'

@@ -87,7 +87,7 @@ class Post(models.Model):
     data = models.DateTimeField(auto_now_add=True, blank=True)
     titulo = models.CharField(max_length=50)
     descricao = models.TextField(blank=True)
-    link = models.URLField(blank=True)
+    link = models.URLField(blank=True, null=True)
     imagem = models.ImageField(blank=True, upload_to=resolution_path, default="", null=True)
 
 
@@ -101,10 +101,10 @@ class PontuacaoQuiz(models.Model):
     nome = models.CharField(max_length=50)
     pontuacao = models.PositiveIntegerField()
 
-class Noticias(models.Model):
+class Noticia(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.CharField(max_length=50)
-    link = models.URLField(blank=True)
+    link = models.URLField(blank=True, null=True)
     imagem = models.ImageField(blank=True, null=True, upload_to=resolution_path, default="")
 
 
