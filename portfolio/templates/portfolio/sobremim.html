@@ -1,0 +1,114 @@
+<!-- sobremim.html -->
+
+{% extends 'portfolio/layout.html' %}
+
+
+{% block main %}
+    <div style="margin:auto;font-size: 36px;padding: 10%;">Licenciatura</div><div style="margin:auto;font-size: 20px;padding: 10%;">
+    {% if request.user.is_authenticated %}
+        <a href="lista?target=tecnologia">EDITAR</a>
+    {% endif %}
+</div>
+
+{% load static %}
+
+    <link rel="stylesheet" href="{% static 'portfolio/css/licenciatura.css' %}">
+
+
+
+{% for ano in anos %}
+    <div class="page-section about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>{{ano}}º ano</h4>
+                        <div class="line-dec"></div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            {% for cadeira in cadeiras %}
+                                {% if cadeira.ano == ano %}
+                                    <div class="col-md-3 col-sm-6 col-xs-12 popup">
+                                        <span class="popuptext" id="myPopup">A Simple Popup!</span>
+                                        <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{cadeira.topicos}}</p> <div class=\"popupmenu\"> \
+                                            {% for p in cadeira.profs_teoricas %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{p.pagina}}\"><div class=\"popupmenuitem\">{{p.first_name}} {{p.last_name}}</div></a> \
+                                            {% endfor %} \
+                                            {% for p in cadeira.profs_praticas %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{p.pagina}}\"><div class=\"popupmenuitem\">{{p.first_name}} {{p.last_name}}</div></a> \
+                                            {% endfor %} \
+                                            <a class=\"popupmenuitem\" href=\"{{cadeira.link}}\"><div class=\"popupmenuitem\">Página da Cadeira</div></a> \
+                                        </div>")'>
+                                            <h4>{{cadeira}}</h4>
+                                            <h5>{{cadeira.semestre}} semestre</h5>
+                                            <p>{{cadeira.ranking}} / 5</p>
+                                            <h4>{{cadeira.ECTS}} ECTS</h4>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+<div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Educação<p></p> {% if request.user.is_authenticated %}
+        <a style="font-size:20px" href="lista?target=escola">EDITAR</a>
+    {% endif %}</div></div>
+
+{% for tipo in ensino %}
+    <div class="page-section about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>{{tipo}}</h4>
+                        <div class="line-dec"></div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            {% for escola in escolas %}
+                                {% if tipo == escola.tipo %}
+                                    <div class="col-md-3 col-sm-6 col-xs-12 popup">
+                                        <div class="service-item first-service" onclick="popUp()">
+                                            <h4>{{escola}}</h4>
+                                            <h5>{{escola.data_de_ingresso}} - {{escola.data_de_termino}}</h5>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+
+<div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Certificados<p></p> {% if request.user.is_authenticated %}
+        <a style="font-size:20px" href="lista?target=certificado">EDITAR</a>
+    {% endif %}</div></div>
+
+<div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Outras Habilitações<p></p> {% if request.user.is_authenticated %}
+        <a style="font-size:20px" href="lista?target=habilitacoes">EDITAR</a>
+    {% endif %}</div></div>
+
+<div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Aptidões e Competencias Pessoais<p></p> {% if request.user.is_authenticated %}
+        <a style="font-size:20px" href="lista?target=aptidoes">EDITAR</a>
+    {% endif %}</div></div>
+
+<div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Interesses e Hobbies<p></p> {% if request.user.is_authenticated %}
+        <a style="font-size:20px" href="lista?target=hobbies">EDITAR</a>
+    {% endif %}</div></div>
+
+
+
+
+
+
+{% endblock %}
+

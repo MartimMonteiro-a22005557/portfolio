@@ -1,0 +1,18 @@
+<!-- newpost.html -->
+
+{% extends 'portfolio/layout.html' %}
+
+{% block main %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'portfolio/css/newpost.css' %}">
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="formwindow">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Submit">
+        </div>
+    </form>
+
+{% endblock %}

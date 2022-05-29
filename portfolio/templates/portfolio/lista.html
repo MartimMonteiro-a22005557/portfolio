@@ -1,0 +1,19 @@
+<!-- newpost.html -->
+
+{% extends 'portfolio/layout.html' %}
+
+{% block main %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'portfolio/css/newpost.css' %}">
+
+        <div class="formwindow">
+            {% for l in lista %}
+                <p><a href="/editar?{{target}}={{l.id}}"><button>Editar</button></a>  {{l.nome}}{{l.titulo}}</p>
+            {% empty %}
+                <p>Nada para editar.</p>
+
+            {% endfor %}
+        </div>
+
+{% endblock %}

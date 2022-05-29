@@ -1,0 +1,51 @@
+<!-- projetos.html -->
+
+{% extends 'portfolio/layout.html' %}
+
+{% block main %}
+
+<div style="margin:auto;font-size: 36px;padding: 10%;">Projetos</div>
+<div style="margin:auto;font-size: 20px;padding: 10%;">
+    {% if request.user.is_authenticated %}
+        <a href="lista?target=tecnologia">EDITAR</a>
+    {% endif %}
+</div>
+    <div class="page-section about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>Realizados por mim</h4>
+                        <div class="line-dec"></div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            {% for projeto in projetos %}
+                                    <div class="col-md-3 col-sm-6 col-xs-12 popup">
+                                        <span class="popuptext" id="myPopup">A Simple Popup!</span>
+
+                                        <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{projeto.descricao}}</p> <div class=\"popupmenu\"> \
+                                            {% for p in projeto.pessoas %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{p.pagina}}\"><div class=\"popupmenuitem\">{{p.first_name}} {{p.last_name}}</div></a> \
+                                            {% endfor %} \
+                                            {% for p in projeto.cadeira %} \
+                                                <a class=\"popupmenuitem\" href=\"{{p.link}}\"><div class=\"popupmenuitem\">{{p.nome}}</div></a> \
+                                            {% endfor %} \
+                                            </div>")'>
+                                            <h4>{{projeto.nome}}</h4>
+                                            {% for p in projeto.langs %}
+                                                <p>{{p.nome}}</p>
+                                            {% endfor %}
+                                            {% for p in projeto.cadeira %}
+                                                <h5>{{p.nome}}</h5>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

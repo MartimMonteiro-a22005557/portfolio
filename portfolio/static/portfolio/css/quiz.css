@@ -1,0 +1,13 @@
+.quiz {
+    text-align:left !important;
+    padding-left: 15% !important;
+    padding-right: 15% !important;
+}
+
+
+.quizgraph {
+    justify-content: center;
+    display: flex;
+
+
+}

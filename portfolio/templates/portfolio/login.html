@@ -1,0 +1,25 @@
+<!-- newpost.html -->
+
+{% extends 'portfolio/layout.html' %}
+
+{% block main %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'portfolio/css/newpost.css' %}">
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="formwindow">
+            {% csrf_token %}
+            <h1>Login</h1>
+
+            <form action="" method="post">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="username">
+                <input type="password" name="password" placeholder="password">
+
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </form>
+
+{% endblock %}

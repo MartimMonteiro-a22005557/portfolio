@@ -1,0 +1,52 @@
+<!-- newpost.html -->
+
+{% extends 'portfolio/layout.html' %}
+
+{% block main %}
+<div style="margin:auto;font-size: 36px;padding: 10%;">Quiz</div>
+<div class="page-section about quiz">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="popuptext" id="myPopup"></span>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <label>Nome:</label>
+                    <input type="text" name="nome" required>
+                    <p>Quais das seguintes opções constituem tecnologias back-end?</p>
+                    <p><input type="checkbox" name="back-end[]" value="html"> HTML</p>
+                    <p><input type="checkbox" name="back-end[]" value="django"> Django</p>
+                    <p><input type="checkbox" name="back-end[]" value="python"> Python</p>
+                    <p><input type="checkbox" name="back-end[]" value="css"> CSS</p>
+                    <p><input type="checkbox" name="back-end[]" value="java"> Java</p>
+                    <p><input type="checkbox" name="back-end[]" value="javascript"> JavaScript</p>
+                    <p>Quais das seguintes opções constituem tecnologias front-end?</p>
+                    <p><input type="checkbox" name="front-end[]" value="html"> HTML</p>
+                    <p><input type="checkbox" name="front-end[]" value="django"> Django</p>
+                    <p><input type="checkbox" name="front-end[]" value="python"> Python</p>
+                    <p><input type="checkbox" name="front-end[]" value="css"> CSS</p>
+                    <p><input type="checkbox" name="front-end[]" value="java"> Java</p>
+                    <p><input type="checkbox" name="front-end[]" value="javascript"> JavaScript</p>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-section about quiz">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 quizgraph">
+                {% load static %}
+                    <img src="{% static 'portfolio/images/plot.png' %}">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'portfolio/css/quiz.css' %}">
+
+{% endblock %}
