@@ -41,7 +41,7 @@ class HabilitacaoForm(ModelForm):
         fields = '__all__'
 
 
-class ApitdaoForm(ModelForm):
+class AptidaoForm(ModelForm):
     class Meta:
         model = Aptidao
         fields = '__all__'

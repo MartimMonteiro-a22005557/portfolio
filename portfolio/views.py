@@ -9,7 +9,8 @@ import collections
 
 from django.urls import reverse
 
-from portfolio.forms import CadeiraForm, ProjetoForm, EscolaForm, TecnologiaForm, LaboratorioForm, CertificadoForm
+from portfolio.forms import CadeiraForm, ProjetoForm, EscolaForm, TecnologiaForm, LaboratorioForm, CertificadoForm, \
+	HobbyForm, HabilitacaoForm, AptidaoForm
 from portfolio.models import Cadeira, Escola, Projeto, Tecnologia, Laboratorio, Pessoa, Post, PostForm, PontuacaoQuiz, \
 	Linguagem, Certificado, Habilitacao, Aptidao, Hobby
 from matplotlib import pyplot as plt
@@ -253,3 +254,5 @@ def editar_page_view(request):
 			form = HobbyForm(instance=a)
 
 		return render(request, 'portfolio/editar.html', {"form": form})
+
+

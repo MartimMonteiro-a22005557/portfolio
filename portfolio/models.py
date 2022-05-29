@@ -8,6 +8,8 @@ from django.db import models
 from django.forms import ModelForm
 
 
+
+
 class Pessoa(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
@@ -80,13 +82,18 @@ class Laboratorio(models.Model):
         return "Lab" + str(self.numero)
 
 
+def resolution_path(instance, filename):
+	return f'users/{instance.id}/'
+
 class Post(models.Model):
     autor = models.CharField(max_length=50, null=True, blank=True)
     data = models.DateTimeField(default="")
     titulo = models.CharField(max_length=50)
     descricao = models.TextField(blank=True)
     link = models.URLField(blank=True)
-    imagem = models.ImageField(blank=True)
+    imagem = models.ImageField(blank=True, upload_to=resolution_path)
+
+
 
 
 class PostForm(ModelForm):
@@ -102,6 +109,7 @@ class PontuacaoQuiz(models.Model):
 class Noticias(models.Model):
     nome = models.CharField(max_length=50)
     descricao = models.CharField(max_length=50)
+    img = models.ImageField(upload_to=resolution_path, blank=True)
     link = models.URLField(blank=True)
 
 
@@ -121,6 +129,7 @@ class Aptidao(models.Model):
                                                                 ("Social", "Social"), ("Linguistica", "Linguistica")])
     projetos = models.ManyToManyField(Projeto, related_name="projeto")
     disciplinas = models.ManyToManyField(Cadeira, related_name="cadeiras")
+
 
 
 
