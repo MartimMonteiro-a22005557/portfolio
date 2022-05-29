@@ -112,8 +112,7 @@
                             {% for not in noticias %}
                                     <div  class="col-md-3 col-sm-6 col-xs-12 popup">
                                         <a href="{{not.link}}">
-                                            <div class="service-item first-service" {% if not.imagem.url != None %} style="background-image:url({{not.imagem.url}});background-size: cover, 100%;
-    background-position: center;)" {% endif %}>
+                                            <div class="service-item first-service" {% if not.imagem.url != None %} style="background-image:url({{not.imagem.url}});background-size: cover, 100%;background-position: center;" {% endif %}>
                                                 <h4>{{not.nome}}</h4>
                                             </div>
                                         </a>
