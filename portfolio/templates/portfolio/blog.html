@@ -30,7 +30,8 @@
                                     <div class="col-md-3 col-sm-6 col-xs-12 popup">
                                         <span class="popuptext" id="myPopup">A Simple Popup!</span>
 
-                                        <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{projeto.descricao}}</p> <div class=\"popupmenu\"> \
+                                        <div style="background-image:url({{post.imagem.url}});background-size: cover, 100%;
+    background-position: center;)" class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{projeto.descricao}}</p> <div class=\"popupmenu\"> \
                                             {% for p in cadeira.profs_teoricas %} \
                                                     <a class=\"popupmenuitem\" href=\"{{p.pagina}}\"><div class=\"popupmenuitem\">{{p.first_name}} {{p.last_name}}</div></a> \
                                             {% endfor %} \
@@ -42,7 +43,6 @@
                                             <h4>{{post.titulo}}</h4>
                                             <h5>{{post.autor}}</h5>
                                             <h5>{{post.data}}</h5>
-                                                <img style="width:64px;height:64px;" src="media/images/VEIL.png">
                                             {% for p in projeto.cadeiras %}
                                                 <h5>{{p.nome}}</h5>
                                             {% endfor %}

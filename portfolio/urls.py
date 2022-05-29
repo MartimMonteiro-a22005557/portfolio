@@ -1,5 +1,6 @@
 #  hello/urls.py
-
+from django.conf import settings
+from django.conf.urls.static import static
 from django.shortcuts import render
 from django.urls import path
 
@@ -23,4 +24,3 @@ urlpatterns = [
     path('lista', views.lista_page_view, name='lista')
 
 ]
-

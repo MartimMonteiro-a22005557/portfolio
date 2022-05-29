@@ -12,7 +12,7 @@ from django.urls import reverse
 from portfolio.forms import CadeiraForm, ProjetoForm, EscolaForm, TecnologiaForm, LaboratorioForm, CertificadoForm, \
 	HobbyForm, HabilitacaoForm, AptidaoForm
 from portfolio.models import Cadeira, Escola, Projeto, Tecnologia, Laboratorio, Pessoa, Post, PostForm, PontuacaoQuiz, \
-	Linguagem, Certificado, Habilitacao, Aptidao, Hobby
+	Linguagem, Certificado, Habilitacao, Aptidao, Hobby, Noticias
 from matplotlib import pyplot as plt
 
 
@@ -69,10 +69,9 @@ def projetos_page_view(request):
 def web_page_view(request):
 	labs = list(Laboratorio.objects.all())
 	labs.sort(key=lambda x: x.numero, reverse=False)
-	return render(request, 'portfolio/web.html', {"tecnologias" : Tecnologia.objects.all(), "laboratorios" : labs})
+	return render(request, 'portfolio/web.html', {"tecnologias" : Tecnologia.objects.all(), "laboratorios" : labs, "noticias" : Noticias.objects.all()})
 
 def blog_page_view(request):
-
 	return render(request, 'portfolio/blog.html', {"posts" : Post.objects.all()})
 
 def contacto_page_view(request):
