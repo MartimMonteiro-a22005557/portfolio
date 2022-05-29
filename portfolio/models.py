@@ -82,7 +82,7 @@ class Laboratorio(models.Model):
 
 class Post(models.Model):
     autor = models.CharField(max_length=50, null=True, blank=True)
-    data = models.DateTimeField(default=datetime.now())
+    data = models.DateTimeField(default="")
     titulo = models.CharField(max_length=50)
     descricao = models.TextField(blank=True)
     link = models.URLField(blank=True)
