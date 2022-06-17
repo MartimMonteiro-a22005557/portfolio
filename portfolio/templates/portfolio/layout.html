@@ -25,10 +25,9 @@
     </nav>
 </header>
 
-
 <main>
+
     <script>
-    // When the user clicks on <div>, open the popup
     var popupOn = false;
     function popUp(texto) {
     console.log(texto);
@@ -57,8 +56,33 @@
         if(document.getElementById("myPopup").classList.contains("show")) {
             popupOn = true;
         }
+    }
 
+    document.addEventListener('DOMContentLoaded', function() {
+        startTime();
+        fetch("https://api.ipma.pt/open-data/forecast/meteorology/cities/daily/1110600.json").then(response => response.json()).then(data => {
+            document.getElementById("temp").innerHTML ="Temperatura Lisboa " + data.data[0].tMin + "º - " + data.data[0].tMax + "º,&nbsp&nbsp&nbsp";
+            console.log(data);
+        });
+    });
 
+    function startTime() {
+        var today = new Date();
+        var day = today.getDate();
+        var month = today.getMonth() + 1;
+        var year = today.getFullYear();
+        var hours = today.getHours();
+        var minutes = today.getMinutes();
+        var seconds = today.getSeconds();
+        minutes = checkTime(minutes);
+        seconds = checkTime(seconds);
+        document.getElementById('clock').innerHTML =   hours + ":" + minutes + ":" + seconds + " " + day + "-" + month + "-" + year +",&nbsp&nbsp&nbsp";
+        setTimeout(startTime, 1000);
+    }
+
+    function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
     }
 </script>
 
@@ -69,7 +93,7 @@
            <link rel="stylesheet" href="{% static 'portfolio/css/layout.css' %}">
     </div>
 
-    <footer>Martim Monteiro, ULHT 2022<button style="margin-left: 1%">Mapa do site</button></footer>
+    <footer><div id="clock"></div><div id="temp"></div>Martim Monteiro, ULHT 2022<button style="margin-left: 1%">Mapa do site</button></footer>
 </main>
 
 

@@ -6,6 +6,7 @@
 <div style="margin:auto;font-size: 36px;padding: 10%;">Programação Web</div>
 <div style="margin:auto;font-size: 20px;padding: 10%;">
     {% if request.user.is_authenticated %}
+        <a href="criar?type=tecnologia">CRIAR</a>
         <a href="lista?target=tecnologia">EDITAR</a>
     {% endif %}
 </div>
@@ -25,9 +26,27 @@
                                 {% if tecnologia.tipo == "Front-End" %}
                                     <div class="col-md-3 col-sm-6 col-xs-12 popup">
                                         <span class="popuptext" id="myPopup">A Simple Popup!</span>
-                                        <div class="service-item first-service" onclick="popUp()">
-                                            <h4>{{tecnologia.acronimo}}</h4>
-                                            <h5>{{tecnologia.nome}}</h5>
+                                        <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{tecnologia.descricao}}</p> <div class=\"popupmenu\"> \
+                                            {% if tecnologia.site_oficial != None %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{not.site_oficial}}\"><div class=\"popupmenuitem\">Site Oficial</div></a> \
+                                            {% endif %} \
+                                            </div>")'>
+                                            <h4>{{tecnologia.nome}}</h4>
+                                            {% if tecnologia.acronimo != None %}
+                                                <h5>Acronimo</h5>
+                                                <p>{{tecnologia.acronimo}}</p>
+                                            {% endif %}
+                                            {% if tecnologia.criador|length > 0 %}
+                                                <h5>Criador</h5>
+                                                <p>{{tecnologia.criador}}</p>
+                                            {% endif %}
+                                            {% if tecnologia.ano_de_criacao != None %}
+                                                <h5>{{tecnologia.ano_de_criacao}}</h5>
+                                            {% endif %}
+                                            {% if tecnologia.imagem.url != None %}
+                                                <BR>
+                                                <img src="{{tecnologia.imagem.url}}" style="width:15%;height:15%;">
+                                            {% endif %}
                                         </div>
                                     </div>
                                 {% endif %}
@@ -51,9 +70,72 @@
                             {% for tecnologia in tecnologias %}
                                 {% if tecnologia.tipo == "Back-End" %}
                                     <div class="col-md-3 col-sm-6 col-xs-12 popup">
-                                        <div class="service-item first-service" onclick="popUp()">
-                                            <h4>{{tecnologia.acronimo}}</h4>
-                                            <h5>{{tecnologia.nome}}</h5>
+                                        <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{tecnologia.descricao}}</p> <div class=\"popupmenu\"> \
+                                            {% if tecnologia.site_oficial != None %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{not.site_oficial}}\"><div class=\"popupmenuitem\">Site Oficial</div></a> \
+                                            {% endif %} \
+                                            </div>")'>
+                                            <h4>{{tecnologia.nome}}</h4>
+                                            {% if tecnologia.acronimo != None %}
+                                                <h5>Acronimo</h5>
+                                                <p>{{tecnologia.acronimo}}</p>
+                                            {% endif %}
+                                            {% if tecnologia.criador|length > 0 %}
+                                                <h5>Criador</h5>
+                                                <p>{{tecnologia.criador}}</p>
+                                            {% endif %}
+                                            {% if tecnologia.ano_de_criacao != None %}
+                                                <h5>{{tecnologia.ano_de_criacao}}</h5>
+                                            {% endif %}
+                                            {% if tecnologia.imagem.url != None %}
+                                                <BR>
+                                                <img src="{{tecnologia.imagem.url}}" style="width:15%;height:15%;">
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="page-section about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>Outras</h4>
+                        <div class="line-dec"></div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            {% for tecnologia in tecnologias %}
+                                {% if tecnologia.tipo == "Outras" %}
+                                    <div class="col-md-3 col-sm-6 col-xs-12 popup">
+                                        <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{tecnologia.descricao}}</p> <div class=\"popupmenu\"> \
+                                            {% if tecnologia.site_oficial != None %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{not.site_oficial}}\"><div class=\"popupmenuitem\">Site Oficial</div></a> \
+                                            {% endif %} \
+                                            </div>")'>
+                                            <h4>{{tecnologia.nome}}</h4>
+                                            {% if tecnologia.acronimo != None %}
+                                                <h5>Acronimo</h5>
+                                                <p>{{tecnologia.acronimo}}</p>
+                                            {% endif %}
+                                            {% if tecnologia.criador|length > 0 %}
+                                                <h5>Criador</h5>
+                                                <p>{{tecnologia.criador}}</p>
+                                            {% endif %}
+                                            {% if tecnologia.ano_de_criacao != None %}
+                                                <h5>{{tecnologia.ano_de_criacao}}</h5>
+                                            {% endif %}
+                                            {% if tecnologia.imagem.url != None %}
+                                                <BR>
+                                                <img src="{{tecnologia.imagem.url}}" style="width:15%;height:15%;">
+                                            {% endif %}
                                         </div>
                                     </div>
                                 {% endif %}
@@ -66,6 +148,7 @@
     </div>
 
 <div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Laboratorios<p></p> {% if request.user.is_authenticated %}
+        <a style="font-size:20px" href="criar?type=laboratorio">CRIAR</a>
         <a style="font-size:20px" href="lista?target=laboratorio">EDITAR</a>
     {% endif %}</div>
 
@@ -82,10 +165,10 @@
                             {% for lab in laboratorios %}
                                     <div class="col-md-3 col-sm-6 col-xs-12 popup">
                                         <a href="{{lab.url}}">
-                                            <div class="service-item first-service">
+                                            <div class="service-item first-service" >
                                                 <h4>Lab {{lab.numero}}</h4>
                                                 <h3>{{lab.nome}}</h3>
-                                        </div>
+                                            </div>
                                         </a>
                                     </div>
                             {% endfor %}
@@ -94,8 +177,9 @@
                 </div>
             </div>
         </div>
-    </div>
+</div>
 <div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Noticias<p></p> {% if request.user.is_authenticated %}
+        <a style="font-size:20px" href="criar?type=noticia">CRIAR</a>
         <a style="font-size:20px" href="lista?target=noticia">EDITAR</a>
     {% endif %}</div>
 
@@ -111,11 +195,14 @@
                         <div class="row">
                             {% for not in noticias %}
                                     <div  class="col-md-3 col-sm-6 col-xs-12 popup">
-                                        <a href="{{not.link}}">
-                                            <div class="service-item first-service" {% if not.imagem.url != None %} style="background-image:url({{not.imagem.url}});background-size: cover, 100%;background-position: center;" {% endif %}>
+                                            <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{not.descricao}}</p> <div class=\"popupmenu\"> \
+                                            {% if not.link != None %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{not.link}}\"><div class=\"popupmenuitem\">Medium</div></a> \
+                                            {% endif %} \
+                                            </div>")'{% if not.imagem.url != None %} style="background-image:url({{not.imagem.url}});background-size: cover, 100%;background-position: center;" {% endif %}>
+
                                                 <h4>{{not.nome}}</h4>
                                             </div>
-                                        </a>
                                     </div>
                             {% endfor %}
                         </div>

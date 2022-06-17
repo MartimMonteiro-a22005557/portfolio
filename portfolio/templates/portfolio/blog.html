@@ -30,21 +30,14 @@
                                     <div class="col-md-3 col-sm-6 col-xs-12 popup">
                                         <span class="popuptext" id="myPopup">A Simple Popup!</span>
                                         <div {% if post.imagem.url != None %} style="background-image:url({{post.imagem.url}});background-size: cover, 100%;
-    background-position: center;" {% endif %} class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{projeto.descricao}}</p> <div class=\"popupmenu\"> \
-                                            {% for p in cadeira.profs_teoricas %} \
-                                                    <a class=\"popupmenuitem\" href=\"{{p.pagina}}\"><div class=\"popupmenuitem\">{{p.first_name}} {{p.last_name}}</div></a> \
-                                            {% endfor %} \
-                                            {% for p in cadeira.profs_praticas %} \
-                                                    <a class=\"popupmenuitem\" href=\"{{p.pagina}}\"><div class=\"popupmenuitem\">{{p.first_name}} {{p.last_name}}</div></a> \
-                                            {% endfor %} \
-                                                <a class=\"popupmenuitem\" href=\"{{cadeira.link}}\"><div class=\"popupmenuitem\">Página da Cadeira</div></a> \
+    background-position: center;" {% endif %} class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{post.descricao}}</p> <div class=\"popupmenu\"> \
+                                            {% if post.link|length > 0 %} \
+                                                <a class=\"popupmenuitem\" href=\"{{cadeira.link}}\"><div class=\"popupmenuitem\">Link</div></a> \
+                                            {% endif %} \
                                             </div>")'>
                                             <h4>{{post.titulo}}</h4>
                                             <h5>{{post.autor}}</h5>
                                             <h5>{{post.data}}</h5>
-                                            {% for p in projeto.cadeiras %}
-                                                <h5>{{p.nome}}</h5>
-                                            {% endfor %}
                                         </div>
                                     </div>
                             {% endfor %}

@@ -4,6 +4,14 @@
 
 {% block main %}
 <div style="margin:auto;font-size: 36px;padding: 10%;">Quiz</div>
+<div style="margin:auto;font-size: 20px;padding: 10%;">
+    {% if request.user.is_authenticated %}
+        <a href="criar?type=pontuacaoquiz">CRIAR</a>
+        <a href="lista?target=pontuacaoquiz">EDITAR</a>
+
+</div>
+    {% endif %}
+</div>
 <div class="page-section about quiz">
     <div class="container">
         <div class="row">

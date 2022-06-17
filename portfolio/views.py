@@ -2,6 +2,7 @@
 from datetime import datetime
 
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.forms import Form
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
@@ -10,14 +11,13 @@ import collections
 from django.urls import reverse
 
 from portfolio.forms import CadeiraForm, ProjetoForm, EscolaForm, TecnologiaForm, LaboratorioForm, CertificadoForm, \
-	HobbyForm, HabilitacaoForm, AptidaoForm, NoticiaForm
+	HobbyForm, HabilitacaoForm, AptidaoForm, NoticiaForm, TFCForm, PontuacaoForm
 from portfolio.models import Cadeira, Escola, Projeto, Tecnologia, Laboratorio, Pessoa, Post, PostForm, PontuacaoQuiz, \
-	Linguagem, Certificado, Habilitacao, Aptidao, Hobby, Noticia
+	Linguagem, Certificado, Habilitacao, Aptidao, Hobby, Noticia, TFC
 from matplotlib import pyplot as plt
 
 
 def home_page_view(request):
-	print(request.user.is_authenticated)
 	return render(request, 'portfolio/home.html')
 
 def sobremim_page_view(request):
@@ -53,9 +53,18 @@ def sobremim_page_view(request):
 		l3.append("Superior")
 
 
+	aptidoes = list(Aptidao.objects.all())
+
+	for x in aptidoes:
+		x.__dict__["projetofeito"] = list(Projeto.objects.filter(projeto__id=x.id))
+		x.__dict__["cadeirausada"] = list(Cadeira.objects.filter(cadeiras__id=x.id))
+
 
 	return render(request, 'portfolio/sobremim.html', {"cadeiras" : cadeiras, "anos" : l, "escolas" : Escola.objects.all(), "ensino" : l3,
-													   "professores" : profs})
+													   "professores" : profs, "aptidoes" : aptidoes, "tiposaptidao": ["Tecnica","Organizativa","Linguagem Programação",
+																																	   "Social","Linguistica"],
+													   "certificados": Certificado.objects.all(), "habilitacoes": Habilitacao.objects.all(),
+													   "hobbies": Hobby.objects.all()})
 
 
 def projetos_page_view(request):
@@ -64,7 +73,7 @@ def projetos_page_view(request):
 		x.__dict__["pessoas"] = list(Pessoa.objects.filter(pessoas__id=x.id))
 		x.__dict__["cadeira"] = list(Cadeira.objects.filter(projetos__id=x.id))
 		x.__dict__["langs"] = list(Linguagem.objects.filter(linguagens__id=x.id))
-	return render(request, 'portfolio/projetos.html', {"projetos": projs})
+	return render(request, 'portfolio/projetos.html', {"projetos": projs, "tfcs" : TFC.objects.all()})
 
 def web_page_view(request):
 	labs = list(Laboratorio.objects.all())
@@ -154,12 +163,13 @@ def login_page_view(request):
 
 	return render(request, 'portfolio/login.html')
 
+@login_required(login_url='/login')
 def logout_page_view(request):
 	logout(request)
 
 	return render(request, 'portfolio/home.html')
 
-
+@login_required(login_url='/login')
 def lista_page_view(request):
 	a = None
 	target = request.GET["target"]
@@ -175,53 +185,77 @@ def lista_page_view(request):
 		a = Tecnologia.objects.all()
 	elif target == "laboratorio":
 		a = Laboratorio.objects.all()
+	elif target == "certificado":
+		a = Certificado.objects.all()
+	elif target == "habilitacao":
+		a = Habilitacao.objects.all()
+	elif target == "aptidao":
+		a = Aptidao.objects.all()
+	elif target == "hobby":
+		a = Hobby.objects.all()
 	elif target == "noticia":
 		a = Noticia.objects.all()
+	elif target == "tfc":
+		a = TFC.objects.all()
+	elif target == "pontuacaoquiz":
+		a = PontuacaoQuiz.objects.all()
+
+
 
 
 	return render(request, 'portfolio/lista.html', {"lista": a, "target" : target})
 
+@login_required(login_url='/login')
 def editar_page_view(request):
 	if request.method == 'POST':
 
 		if "cadeira" in request.GET:
 			a = Cadeira.objects.get(id=request.GET["cadeira"])
-			form = CadeiraForm(request.POST, instance=a)
+			form = CadeiraForm(request.POST, request.FILES, instance=a)
 		elif "projeto" in request.GET:
 			a = Projeto.objects.get(id=request.GET["projeto"])
-			form = ProjetoForm(request.POST, instance=a)
+			form = ProjetoForm(request.POST, request.FILES, instance=a)
 		elif "escola" in request.GET:
 			a = Escola.objects.get(id=request.GET["escola"])
-			form = EscolaForm(request.POST, instance=a)
+			form = EscolaForm(request.POST, request.FILES, instance=a)
 		elif "post" in request.GET:
 			a = Post.objects.get(id=request.GET["post"])
-			form = PostForm(request.POST, instance=a)
+			form = PostForm(request.POST, request.FILES, instance=a)
 		elif "laboratorio" in request.GET:
 			a = Laboratorio.objects.get(id=request.GET["laboratorio"])
-			form = LaboratorioForm(request.POST, instance=a)
+			form = LaboratorioForm(request.POST, request.FILES, instance=a)
 		elif "tecnologia" in request.GET:
 			a = Tecnologia.objects.get(id=request.GET["tecnologia"])
-			form = TecnologiaForm(request.POST, instance=a)
+			form = TecnologiaForm(request.POST, request.FILES, instance=a)
 		elif "certificado" in request.GET:
 			a = Certificado.objects.get(id=request.GET["certificado"])
-			form = CertificadoForm(request.POST, instance=a)
-		elif "habilitcao" in request.GET:
-			a = Habilitacao.objects.get(id=request.GET["habilitcao"])
-			form = HabilitacaoForm(request.POST, instance=a)
+			form = CertificadoForm(request.POST, request.FILES, instance=a)
+		elif "habilitacao" in request.GET:
+			a = Habilitacao.objects.get(id=request.GET["habilitacao"])
+			form = HabilitacaoForm(request.POST, request.FILES, instance=a)
 		elif "aptidao" in request.GET:
 			a = Aptidao.objects.get(id=request.GET["aptidao"])
-			form = AptidaoForm(request.POST, instance=a)
+			form = AptidaoForm(request.POST, request.FILES, instance=a)
 		elif "hobby" in request.GET:
 			a = Hobby.objects.get(id=request.GET["hobby"])
-			form = HobbyForm(request.POST, instance=a)
+			form = HobbyForm(request.POST, request.FILES, instance=a)
 		elif "noticia" in request.GET:
 			a = Noticia.objects.get(id=request.GET["noticia"])
-			form = NoticiaForm(request.POST, instance=a)
+			form = NoticiaForm(request.POST, request.FILES, instance=a)
+		elif "tfc" in request.GET:
+			a = TFC.objects.get(id=request.GET["tfc"])
+			form = TFCForm(request.POST, request.FILES, instance=a)
+		elif "pontuacaoquiz" in request.GET:
+			a = PontuacaoQuiz.objects.get(id=request.GET["pontuacaoquiz"])
+			form = PontuacaoForm(request.POST, request.FILES, instance=a)
+
+		if request.POST["submit"] == "Delete":
+			a.delete()
+		else:
+			form.save()
 
 
 
-
-		form.save()
 		return HttpResponseRedirect('/')
 
 	if request.method == 'GET':
@@ -247,8 +281,8 @@ def editar_page_view(request):
 		elif "certificado" in request.GET:
 			a = Certificado.objects.get(id=request.GET["certificado"])
 			form = CertificadoForm(instance=a)
-		elif "habilitcao" in request.GET:
-			a = Habilitacao.objects.get(id=request.GET["habilitcao"])
+		elif "habilitacao" in request.GET:
+			a = Habilitacao.objects.get(id=request.GET["habilitacao"])
 			form = HabilitacaoForm(instance=a)
 		elif "aptidao" in request.GET:
 			a = Aptidao.objects.get(id=request.GET["aptidao"])
@@ -259,7 +293,81 @@ def editar_page_view(request):
 		elif "noticia" in request.GET:
 			a = Noticia.objects.get(id=request.GET["noticia"])
 			form = NoticiaForm(instance=a)
+		elif "tfc" in request.GET:
+			a = TFC.objects.get(id=request.GET["tfc"])
+			form = TFCForm(instance=a)
+		elif "pontuacaoquiz" in request.GET:
+			a =PontuacaoQuiz.objects.get(id=request.GET["pontuacaoquiz"])
+			form = PontuacaoForm(instance=a)
 
 		return render(request, 'portfolio/editar.html', {"form": form})
+
+@login_required(login_url='/login')
+def criar_page_view(request):
+	if request.method == 'POST':
+
+		if request.GET["type"] == "cadeira":
+			form = CadeiraForm(request.POST, request.FILES)
+		elif request.GET["type"] == "projeto":
+			form = ProjetoForm(request.POST, request.FILES)
+		elif request.GET["type"] == "escola":
+			form = EscolaForm(request.POST, request.FILES)
+		elif request.GET["type"] == "post":
+			form = PostForm(request.POST, request.FILES)
+		elif request.GET["type"] == "laboratorio":
+			form = LaboratorioForm(request.POST, request.FILES)
+		elif request.GET["type"] == "tecnologia":
+			form = TecnologiaForm(request.POST, request.FILES)
+		elif request.GET["type"] == "certificado":
+			form = CertificadoForm(request.POST, request.FILES)
+		elif request.GET["type"] == "habilitacao":
+			form = HabilitacaoForm(request.POST, request.FILES)
+		elif request.GET["type"] == "aptidao":
+			form = AptidaoForm(request.POST, request.FILES)
+		elif request.GET["type"] == "hobby":
+			form = HobbyForm(request.POST, request.FILES)
+		elif request.GET["type"] == "noticia":
+			form = NoticiaForm(request.POST, request.FILES)
+		elif request.GET["type"] == "tfc":
+			form = TFCForm(request.POST, request.FILES)
+		elif request.GET["type"] == "pontuacaoquiz":
+			form = PontuacaoForm(request.POST, request.FILES)
+
+
+
+
+		form.save()
+		return HttpResponseRedirect('/')
+
+	if request.method == 'GET':
+		form = Form()
+		if request.GET["type"] == "cadeira":
+			form = CadeiraForm()
+		elif request.GET["type"] == "projeto":
+			form = ProjetoForm()
+		elif request.GET["type"] == "escola":
+			form = EscolaForm()
+		elif request.GET["type"] == "post":
+			form = PostForm()
+		elif request.GET["type"] == "tecnologia":
+			form = TecnologiaForm()
+		elif request.GET["type"] == "laboratorio":
+			form = LaboratorioForm()
+		elif request.GET["type"] == "certificado":
+			form = CertificadoForm()
+		elif request.GET["type"] == "habilitacao":
+			form = HabilitacaoForm()
+		elif request.GET["type"] == "aptidao":
+			form = AptidaoForm()
+		elif request.GET["type"] == "hobby":
+			form = HobbyForm()
+		elif request.GET["type"] == "noticia":
+			form = NoticiaForm()
+		elif request.GET["type"] == "tfc":
+			form = TFCForm()
+		elif request.GET["type"] == "pontuacaoquiz":
+			form = PontuacaoForm()
+
+		return render(request, 'portfolio/criar.html', {"form": form})
 
 

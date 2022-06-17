@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 from portfolio.models import Pessoa, Cadeira, Escola, Linguagem, Projeto, Tecnologia, Laboratorio, PontuacaoQuiz, \
-    Certificado, Habilitacao, Aptidao, Hobby, Post, Noticia
+    Certificado, Habilitacao, Aptidao, Hobby, Post, Noticia, TFC
 
 
 class PessoaAdmin(admin.ModelAdmin):
@@ -62,6 +62,10 @@ class PostAdmin(admin.ModelAdmin):
     class Meta:
         fields = "__all__"
 
+class TFCAdmin(admin.ModelAdmin):
+    class Meta:
+        fields = "__all__"
+
 
 admin.site.register(Pessoa, PessoaAdmin)
 
@@ -90,3 +94,5 @@ admin.site.register(Aptidao, AptidaoAdmin)
 admin.site.register(Hobby, HobbyAdmin)
 
 admin.site.register(Post, PostAdmin)
+
+admin.site.register(TFC, TFCAdmin)

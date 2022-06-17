@@ -7,8 +7,10 @@
 <div style="margin:auto;font-size: 36px;padding: 10%;">Projetos</div>
 <div style="margin:auto;font-size: 20px;padding: 10%;">
     {% if request.user.is_authenticated %}
-        <a href="lista?target=tecnologia">EDITAR</a>
+        <a href="criar?type=projeto">CRIAR</a>
+        <a href="lista?target=projeto">EDITAR</a>
     {% endif %}
+
 </div>
     <div class="page-section about">
         <div class="container">
@@ -28,9 +30,6 @@
                                             {% for p in projeto.pessoas %} \
                                                     <a class=\"popupmenuitem\" href=\"{{p.pagina}}\"><div class=\"popupmenuitem\">{{p.first_name}} {{p.last_name}}</div></a> \
                                             {% endfor %} \
-                                            {% for p in projeto.cadeira %} \
-                                                <a class=\"popupmenuitem\" href=\"{{p.link}}\"><div class=\"popupmenuitem\">{{p.nome}}</div></a> \
-                                            {% endfor %} \
                                             </div>")'>
                                             <h4>{{projeto.nome}}</h4>
                                             {% for p in projeto.langs %}
@@ -39,6 +38,55 @@
                                             {% for p in projeto.cadeira %}
                                                 <h5>{{p.nome}}</h5>
                                             {% endfor %}
+                                        </div>
+                                    </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div style="margin:auto;font-size: 36px;padding: 10%;">TFCs Interessantes</div>
+<div style="margin:auto;font-size: 20px;padding: 10%;">
+    {% if request.user.is_authenticated %}
+        <a href="criar?type=tfc">CRIAR</a>
+        <a href="lista?target=tfc">EDITAR</a>
+    {% endif %}
+
+</div>
+<div class="page-section about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>ULHT</h4>
+                        <div class="line-dec"></div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            {% for projeto in tfcs %}
+                                    <div class="col-md-3 col-sm-6 col-xs-12 popup">
+
+                                        <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{projeto.resumo}}</p> <div class=\"popupmenu\"> \
+                                            {% if projeto.relatorio != None %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{projeto.relatorio}}\"><div class=\"popupmenuitem\">Relatorio</div></a> \
+                                            {% endif %} \
+                                            {% if projeto.github != None %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{projeto.github}}\"><div class=\"popupmenuitem\">Github</div></a> \
+                                            {% endif %} \
+                                            </div>")'>
+
+                                            <h4>{{projeto.nome}}</h4>
+                                            {% if projeto.autor != None %}
+                                                <h5>Autor</h5>
+                                                <p>{{projeto.autor}}</p>
+                                            {% endif %}
+                                            {% if projeto.orientador != None %}
+                                                <h5>Orientador</h5>
+                                                <p>{{projeto.orientador}}</p>
+                                            {% endif %}
                                         </div>
                                     </div>
                             {% endfor %}

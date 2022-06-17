@@ -6,7 +6,8 @@
 {% block main %}
     <div style="margin:auto;font-size: 36px;padding: 10%;">Licenciatura</div><div style="margin:auto;font-size: 20px;padding: 10%;">
     {% if request.user.is_authenticated %}
-        <a href="lista?target=tecnologia">EDITAR</a>
+        <a href="criar?type=cadeira">CRIAR</a>
+        <a href="lista?target=cadeira">EDITAR</a>
     {% endif %}
 </div>
 
@@ -38,7 +39,9 @@
                                             {% for p in cadeira.profs_praticas %} \
                                                     <a class=\"popupmenuitem\" href=\"{{p.pagina}}\"><div class=\"popupmenuitem\">{{p.first_name}} {{p.last_name}}</div></a> \
                                             {% endfor %} \
-                                            <a class=\"popupmenuitem\" href=\"{{cadeira.link}}\"><div class=\"popupmenuitem\">Página da Cadeira</div></a> \
+                                            {% if cadeira.link != None %} \
+                                                <a class=\"popupmenuitem\" href=\"{{cadeira.link}}\"><div class=\"popupmenuitem\">Página da Cadeira</div></a> \
+                                            {% endif %} \
                                         </div>")'>
                                             <h4>{{cadeira}}</h4>
                                             <h5>{{cadeira.semestre}} semestre</h5>
@@ -57,6 +60,7 @@
 {% endfor %}
 
 <div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Educação<p></p> {% if request.user.is_authenticated %}
+        <a style="font-size:20px" href="criar?type=escola">CRIAR</a>
         <a style="font-size:20px" href="lista?target=escola">EDITAR</a>
     {% endif %}</div></div>
 
@@ -76,7 +80,7 @@
                                     <div class="col-md-3 col-sm-6 col-xs-12 popup">
                                         <div class="service-item first-service" onclick="popUp()">
                                             <h4>{{escola}}</h4>
-                                            <h5>{{escola.data_de_ingresso}} - {{escola.data_de_termino}}</h5>
+                                            <h5>{{escola.data_de_ingresso}} - {% if escola.data_de_termino != Null %}{{escola.data_de_termino}} {% endif %} </h5>
                                         </div>
                                     </div>
                                 {% endif %}
@@ -90,22 +94,138 @@
 {% endfor %}
 
 <div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Certificados<p></p> {% if request.user.is_authenticated %}
+        <a style="font-size:20px" href="criar?type=certificado">CRIAR</a>
         <a style="font-size:20px" href="lista?target=certificado">EDITAR</a>
     {% endif %}</div></div>
 
+<div class="page-section about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>Obtidos</h4>
+                        <div class="line-dec"></div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            {% for cert in certificados %}
+                                    <div  class="col-md-3 col-sm-6 col-xs-12 popup">
+                                            <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{cert.descricao}}</p> <div class=\"popupmenu\"> \
+                                            </div>")'>
+
+                                                <h4>{{cert.nome}}</h4>
+                                            </div>
+                                    </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 <div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Outras Habilitações<p></p> {% if request.user.is_authenticated %}
-        <a style="font-size:20px" href="lista?target=habilitacoes">EDITAR</a>
+        <a style="font-size:20px" href="criar?type=habilitacao">CRIAR</a>
+        <a style="font-size:20px" href="lista?target=habilitacao">EDITAR</a>
     {% endif %}</div></div>
+
+<div class="page-section about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>Obtidas</h4>
+                        <div class="line-dec"></div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            {% for hab in habilitacoes %}
+                                    <div  class="col-md-3 col-sm-6 col-xs-12 popup">
+                                            <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{hab.descricao}}</p> <div class=\"popupmenu\"> \
+                                            </div>")'>
+
+                                                <h4>{{hab.nome}}</h4>
+                                            </div>
+                                    </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Aptidões e Competencias Pessoais<p></p> {% if request.user.is_authenticated %}
-        <a style="font-size:20px" href="lista?target=aptidoes">EDITAR</a>
+        <a style="font-size:20px" href="criar?type=aptidao">CRIAR</a>
+        <a style="font-size:20px" href="lista?target=aptidao">EDITAR</a>
     {% endif %}</div></div>
+{% for tipo in tiposaptidao %}
+    <div class="page-section about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>{{tipo}}</h4>
+                        <div class="line-dec"></div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            {% for aptidao in aptidoes %}
+                                {% if aptidao.tipo == tipo %}
+                                    <div class="col-md-3 col-sm-6 col-xs-12 popup">
+                                        <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{aptidao.descricao}}</p> <div class=\"popupmenu\"> \
+                                            {% for p in aptidao.cadeirausada %} \
+                                                    <a class=\"popupmenuitem\" href=\"{{p.link}}\"><div class=\"popupmenuitem\">{{p.nome}}</div></a> \
+                                            {% endfor %} \
+                                            {% for p in aptidao.projetofeito %} \
+                                                    <a class=\"popupmenuitem\"><div class=\"popupmenuitem\">{{p.nome}}</div></a> \
+                                            {% endfor %} \
+                                        </div>")'>
+                                            <h4>{{aptidao.nome}}</h4>
+
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
 
 <div style="text-align: center;;font-size: 36px;padding: 10%;box-shadow: 0px 0px 15px #cdcdcd;">Interesses e Hobbies<p></p> {% if request.user.is_authenticated %}
-        <a style="font-size:20px" href="lista?target=hobbies">EDITAR</a>
+        <a style="font-size:20px" href="criar?type=hobby">CRIAR</a>
+        <a style="font-size:20px" href="lista?target=hobby">EDITAR</a>
     {% endif %}</div></div>
 
+<div class="page-section about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="section-heading">
+                        <h4>Hobbies</h4>
+                        <div class="line-dec"></div>
+                        <br>
+                        <br>
+                        <div class="row">
+                            {% for hobby in hobbies %}
+                                    <div  class="col-md-3 col-sm-6 col-xs-12 popup">
+                                            <div class="service-item first-service" onclick='popUp("<p style=\"margin: 10%;\">{{hobby.descricao}}</p> <div class=\"popupmenu\"> \
+                                            </div>")'>
 
+                                                <h4>{{hobby.nome}}</h4>
+                                            </div>
+                                    </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 

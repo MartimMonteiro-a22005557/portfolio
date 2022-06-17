@@ -1,0 +1,5 @@
+.flex-wrapper {
+  background-image: url("../../portfolio/images/heroimg.jpg");
+  background-size: cover;
+  text-align: center;
+}
